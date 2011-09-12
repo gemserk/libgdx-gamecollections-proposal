@@ -37,7 +37,7 @@ public class RandomAccessMapTest {
 	}
 	
 	@Test
-	public void ifYouRemoveAnElementItIsGone(){
+	public void ifYouRemoveTheFirstElementItIsGone(){
 		map.put("key1", "value1");
 		map.put("key2", "value2");
 		map.put("key3", "value3");
@@ -53,6 +53,56 @@ public class RandomAccessMapTest {
 		assertThat(map,Matchers.not(Matchers.hasEntry("key1", "value1")));
 		assertThat(map,Matchers.hasEntry("key2", "value2"));
 		assertThat(map,Matchers.hasEntry("key3", "value3"));
+		
+		RandomAccessWithKey<String, String> random = map;
+		
+		for (int i = 0; i < map.size(); i++) {
+			System.out.println("K: " + random.getKey(i) + " - V: " + random.get(i));
+		}
+	}
+	
+	@Test
+	public void ifYouRemoveTheMiddleElementItIsGone(){
+		map.put("key1", "value1");
+		map.put("key2", "value2");
+		map.put("key3", "value3");
+		assertFalse("the map should not be empty", map.isEmpty());
+		assertEquals("the map should have size 3",3,map.size());
+		
+		assertThat(map,Matchers.hasEntry("key1", "value1"));
+		assertThat(map,Matchers.hasEntry("key2", "value2"));
+		assertThat(map,Matchers.hasEntry("key3", "value3"));
+		
+		map.remove("key2");
+		
+		assertThat(map,Matchers.hasEntry("key1", "value1"));
+		assertThat(map,Matchers.not(Matchers.hasEntry("key2", "value2")));
+		assertThat(map,Matchers.hasEntry("key3", "value3"));
+		
+		RandomAccessWithKey<String, String> random = map;
+		
+		for (int i = 0; i < map.size(); i++) {
+			System.out.println("K: " + random.getKey(i) + " - V: " + random.get(i));
+		}
+	}
+	
+	@Test
+	public void ifYouRemoveTheLastElementItIsGone(){
+		map.put("key1", "value1");
+		map.put("key2", "value2");
+		map.put("key3", "value3");
+		assertFalse("the map should not be empty", map.isEmpty());
+		assertEquals("the map should have size 3",3,map.size());
+		
+		assertThat(map,Matchers.hasEntry("key1", "value1"));
+		assertThat(map,Matchers.hasEntry("key2", "value2"));
+		assertThat(map,Matchers.hasEntry("key3", "value3"));
+		
+		map.remove("key3");
+		
+		assertThat(map,Matchers.hasEntry("key1", "value1"));
+		assertThat(map,Matchers.hasEntry("key2", "value2"));
+		assertThat(map,Matchers.not(Matchers.hasEntry("key3", "value3")));
 		
 		RandomAccessWithKey<String, String> random = map;
 		
