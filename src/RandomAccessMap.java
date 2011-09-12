@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -46,7 +45,7 @@ public class RandomAccessMap<K, V> implements Map<K, V>, RandomAccessWithKey<K, 
 
 	@Override
 	public V put(K key, V value) {
-		int position = positions.get(key,NOT_PRESENT);
+		int position = positions.get(key, NOT_PRESENT);
 		if (position == NOT_PRESENT) {
 			items.add(value);
 			keys.add(key);
@@ -59,14 +58,14 @@ public class RandomAccessMap<K, V> implements Map<K, V>, RandomAccessWithKey<K, 
 
 	@Override
 	public V remove(Object key) {
-		int position = positions.get(key,NOT_PRESENT);
+		int position = positions.get(key, NOT_PRESENT);
 		if (position == NOT_PRESENT)
 			return null;
 
 		int lastPosition = items.size() - 1;
 
 		V lastItem = items.get(lastPosition);
-		positions.remove(key,NOT_PRESENT);
+		positions.remove(key, NOT_PRESENT);
 		V removedItem = items.remove(lastPosition);
 		K lastKey = keys.remove(lastPosition);
 
