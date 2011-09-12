@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class RandomAccessMap<K, V> implements  RandomAccessWithKey<K, V> {
+public class RandomAccessMap<K, V> implements Map<K, V>, RandomAccessWithKey<K, V> {
 
 	ArrayList<V> items = new ArrayList<V>();
 	ArrayList<K> keys = new ArrayList<K>();
@@ -17,18 +17,22 @@ public class RandomAccessMap<K, V> implements  RandomAccessWithKey<K, V> {
 		return items.size();
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return items.isEmpty();
 	}
 
+	@Override
 	public boolean containsKey(Object key) {
 		return positions.containsKey(key);
 	}
 
+	@Override
 	public boolean containsValue(Object value) {
 		return items.contains(value);
 	}
 
+	@Override
 	public V get(Object key) {
 		int position = positions.get(key);
 		if (position == CachingFastMapIntValue.NOT_PRESENT_VALUE)
@@ -37,6 +41,7 @@ public class RandomAccessMap<K, V> implements  RandomAccessWithKey<K, V> {
 		return items.get(position);
 	}
 
+	@Override
 	public V put(K key, V value) {
 		int position = positions.get(key);
 		if (position == CachingFastMapIntValue.NOT_PRESENT_VALUE) {
@@ -49,6 +54,7 @@ public class RandomAccessMap<K, V> implements  RandomAccessWithKey<K, V> {
 		return items.set(position, value);
 	}
 
+	@Override
 	public V remove(Object key) {
 		int position = positions.get(key);
 		if (position == CachingFastMapIntValue.NOT_PRESENT_VALUE)
@@ -69,6 +75,7 @@ public class RandomAccessMap<K, V> implements  RandomAccessWithKey<K, V> {
 		return removedItem;
 	}
 
+	@Override
 	public void putAll(Map<? extends K, ? extends V> m) {
 		for (java.util.Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
 			put(entry.getKey(), entry.getValue());
@@ -85,20 +92,24 @@ public class RandomAccessMap<K, V> implements  RandomAccessWithKey<K, V> {
 		return keys.get(index);
 	}
 
+	@Override
 	public void clear() {
 		items.clear();
 		positions.clear();
 		keys.clear();
 	}
 
+	@Override
 	public Set<K> keySet() {
 		return new HashSet<K>(keys);
 	}
 
+	@Override
 	public Collection<V> values() {
 		return new ArrayList<V>(items);
 	}
 
+	@Override
 	public Set<java.util.Map.Entry<K, V>> entrySet() {
 		Set<java.util.Map.Entry<K, V>> result = new HashSet<Map.Entry<K, V>>();
 		for (int i = 0; i < size(); i++) {
